@@ -36,7 +36,7 @@
              * WordPress installation, you will get passed an string of the HTML code which you can modify before the PDF gets rendered.
              */
             if(function_exists('magazineModifyHtml')){
-                $sHtmlToRender = magazineModifyHtml($sHtmlToRender);
+                $sHtmlToRender = magazineModifyHtml($sHtmlToRender, $aPostIds);
             }
 
             /**
@@ -82,7 +82,8 @@
                     curl_setopt_array(
                         $curl, 
                         array(
-                            CURLOPT_URL => 'https://printcss-cloud.p.rapidapi.com/render',
+                            //CURLOPT_URL => 'https://printcss-cloud.p.rapidapi.com/render', => Usual way
+                            CURLOPT_URL => 'http://157.90.144.168/api/render', #temp gateway error fix
                             CURLOPT_RETURNTRANSFER => true,
                             CURLOPT_ENCODING => '',
                             CURLOPT_MAXREDIRS => 10,
@@ -93,7 +94,8 @@
                             CURLOPT_POSTFIELDS => json_encode($oSend),
                             CURLOPT_HTTPHEADER => array(
                                 'x-rapidapi-host: printcss-cloud.p.rapidapi.com',
-                                'x-rapidapi-key: ' . $magazine_rapidapi_key
+                                'x-rapidapi-key: ' . $magazine_rapidapi_key,
+                                'X-Rapidapi-Proxy-Secret: gatewaystempfix' #temp gateway error fix
                             ),
                         )
                     );
